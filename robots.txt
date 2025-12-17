@@ -1,0 +1,12 @@
+# robots.txt untuk AI Prediksi Togel
+User-agent: *
+Disallow: /admin/
+Disallow: /login/
+Disallow: /api/
+Disallow: /private/
+
+Allow: /
+Allow: /index.html
+Allow: /script.js
+
+# Note: Ini website edukasi prediksi togel
