@@ -9,4 +9,6 @@ Allow: /
 Allow: /index.html
 Allow: /script.js
 
+Sitemap: https://prediksitogel.vercel.app/sitemap.xml
+
 # Note: Ini website edukasi prediksi togel
