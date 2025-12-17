@@ -1,2 +1,14 @@
-# prediksitogel
-Prediksi Togel Jitu 4D lengkap dan akurat untuk hari ini dan setiap periode. Bukan aplikasi, tidak pakai storage HP. Prediksi menggunakan teknologi AI modern yang selalu update.
+# Prediksi Togel Jitu 4D
+
+🔧 Tools analisis berbasis pola & feeling — **untuk keperluan edukasi saja**.
+
+⚠️ **Disclaimer**  
+- Bukan bocoran, bukan jaminan menang  
+- Hasil bersifat simulasi & hiburan  
+- Gunakan secara bijak & bertanggung jawab  
+
+🌐 **Live Demo**:  
+https://prediksitogel.vercel.app
+
+📦 Teknologi: HTML, CSS, JavaScript (client-side only)  
+🔐 Tidak mengumpulkan data pengguna  
