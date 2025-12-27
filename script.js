@@ -500,90 +500,112 @@ function startEduRotation() {
 }
 
   function runProcessingDrama() {
-    console.log('Starting processing drama...');
-    showPage('page-processing');
-    
-  const cleanupEdu = startEduRotation();
-      
-    const fill = qs('#progressFill');
-    const text = qs('#progressText');
-    const log = qs('#processLog');
-    
-    if (!fill || !text || !log) {
-      console.error('Processing elements not found');
-      setTimeout(showResults, 500);
-      return;
-    }
-    
-    log.innerHTML = '';
-    
-    const dramaScript = [
-      {
-        percent: 15,
-        text: "Mengakses database global...",
-        log: `🔍 CONNECTING TO PREDICTION NETWORK...<br>✓ Connected to 15 servers worldwide`
-      },
-      {
-        percent: 30,
-        text: "Menganalisa pola 15 tahun data...",
-        log: `📊 LOADING HISTORICAL DATA (2008-2024)...<br>✓ 5,247 hasil terverifikasi loaded`
-      },
-      {
-        percent: 45,
-        text: "Memindai trend bandar underground...",
-        log: `🕵️ SCANNING BANDAR PATTERNS...<br>✓ 3 pola utama terdeteksi`
-      },
-      {
-        percent: 60,
-        text: "Menghitung probabilitas neural network...",
-        log: `🧠 RUNNING AI MODEL v3.7...<br>✓ Neural network accuracy: 87.4%`
-      },
-      {
-        percent: 75,
-        text: "Memverifikasi dengan satellite data...",
-        log: `🛰 CROSS-REFERENCING SATELLITE DATA...<br>✓ Atmospheric patterns analyzed`
-      },
-      {
-        percent: 90,
-        text: "Menyusun prediksi optimal...",
-        log: `⚙️ GENERATING PREDICTION MATRIX...<br>✓ 67 angka kombinasi terpilih`
-      },
-      {
-        percent: 100,
-        text: "Prediksi siap!",
-        log: `✅ PREDIKSI BERHASIL DIHASILKAN!<br>🎯 Ready for ${userData.pasaran} draw`
-      }
-    ];
-    
-    let currentStep = 0;
-    
-    const interval = setInterval(() => {
-      if (currentStep < dramaScript.length) {
-        const step = dramaScript[currentStep];
-        
-        fill.style.width = step.percent + '%';
-        text.textContent = step.text;
-        
-        // Add log with timestamp
-        const now = new Date();
-        const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
-        
-        const logLine = document.createElement('div');
-        logLine.innerHTML = `[${timeStr}] ${step.log}`;
-        logLine.style.cssText = 'margin-bottom: 8px; font-size: 12px; color: #666;';
-        log.appendChild(logLine);
-        
-        // Auto scroll to bottom
-        log.scrollTop = log.scrollHeight;
-        
-        currentStep++;
-      } else {
-        clearInterval(interval);
-        if (cleanupEdu) cleanupEdu();
-        setTimeout(showResults, 800);
-      }
-    }, 1200);
+  console.log('=== STARTING PROCESSING DRAMA ===');
+  
+  // 1. STOP ANY OLD INTERVAL FIRST
+  if (window.processingInterval) {
+    clearInterval(window.processingInterval);
+    window.processingInterval = null;
   }
+  
+  // 2. SHOW PROCESSING PAGE
+  showPage('page-processing');
+  
+  // 3. RESET UI ELEMENTS
+  const fill = qs('#progressFill');
+  const text = qs('#progressText');
+  const log = qs('#processLog');
+  
+  if (!fill || !text || !log) {
+    console.error('Processing elements not found');
+    setTimeout(showResults, 500);
+    return;
+  }
+  
+  // Reset progress bar
+  fill.style.width = '0%';
+  text.textContent = 'Memulai analisis...';
+  log.innerHTML = '';
+  
+  // 4. START EDU ROTATION
+  const cleanupEdu = startEduRotation();
+  
+  // 5. DRAMA SCRIPT
+  const dramaScript = [
+    {
+      percent: 15,
+      text: "Mengakses database global...",
+      log: `🔍 CONNECTING TO PREDICTION NETWORK...<br>✓ Connected to 15 servers worldwide`
+    },
+    {
+      percent: 30,
+      text: "Menganalisa pola 15 tahun data...",
+      log: `📊 LOADING HISTORICAL DATA (2008-2024)...<br>✓ 5,247 hasil terverifikasi loaded`
+    },
+    {
+      percent: 45,
+      text: "Memindai trend bandar underground...",
+      log: `🕵️ SCANNING BANDAR PATTERNS...<br>✓ 3 pola utama terdeteksi`
+    },
+    {
+      percent: 60,
+      text: "Menghitung probabilitas neural network...",
+      log: `🧠 RUNNING AI MODEL v3.7...<br>✓ Neural network accuracy: 87.4%`
+    },
+    {
+      percent: 75,
+      text: "Memverifikasi dengan satellite data...",
+      log: `🛰 CROSS-REFERENCING SATELLITE DATA...<br>✓ Atmospheric patterns analyzed`
+    },
+    {
+      percent: 90,
+      text: "Menyusun prediksi optimal...",
+      log: `⚙️ GENERATING PREDICTION MATRIX...<br>✓ 67 angka kombinasi terpilih`
+    },
+    {
+      percent: 100,
+      text: "Prediksi siap!",
+      log: `✅ PREDIKSI BERHASIL DIHASILKAN!<br>🎯 Ready for ${userData.pasaran} draw`
+    }
+  ];
+  
+  let currentStep = 0;
+  
+  // 6. CREATE NEW INTERVAL
+  window.processingInterval = setInterval(() => {
+    if (currentStep < dramaScript.length) {
+      const step = dramaScript[currentStep];
+      
+      fill.style.width = step.percent + '%';
+      text.textContent = step.text;
+      
+      // Add log with timestamp
+      const now = new Date();
+      const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+      
+      const logLine = document.createElement('div');
+      logLine.innerHTML = `[${timeStr}] ${step.log}`;
+      logLine.style.cssText = 'margin-bottom: 8px; font-size: 12px; color: #666;';
+      log.appendChild(logLine);
+      
+      // Auto scroll to bottom
+      log.scrollTop = log.scrollHeight;
+      
+      currentStep++;
+    } else {
+      // 7. CLEANUP AND SHOW RESULTS
+      clearInterval(window.processingInterval);
+      window.processingInterval = null;
+      
+      if (cleanupEdu) cleanupEdu();
+      
+      console.log('=== PROCESSING COMPLETE ===');
+      setTimeout(showResults, 800);
+    }
+  }, 1200);
+  
+  console.log('Processing interval started');
+}
 
   /* =====================
      RENDER RESULTS PAGE
@@ -847,4 +869,5 @@ const createDigitBox = (digit, size = 'medium', type = '7d') => {
   console.log('Initializing Togel AI V3...');
   showPage('page-intro');
 });
+
 
