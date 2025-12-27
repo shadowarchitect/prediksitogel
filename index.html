@@ -2429,29 +2429,40 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('=== SHOWING RESULTS PAGE ===');
   
   try {
-    // SIMPLE TEST: Skip everything, just show page
-    console.log('1. Attempting to show page...');
+    // 1. Generate predictions
+    console.log('Generating predictions...');
+    generateAllPredictions();
+    console.log('Predictions generated:', userData);
+    
+    // 2. Show page first
+    console.log('Showing page...');
     showPage('page-result');
-    console.log('2. Page should be shown');
     
-    // Simple fallback content
-    const resultTitle = qs('#resultTitle');
-    if (resultTitle) {
-      resultTitle.textContent = 'PREDIKSI TEST';
+    // 3. Simple render TEST
+    console.log('Rendering simple test...');
+    
+    // Just show BBFS 7D as test
+    const bbfs7dBox = qs('#bbfs7dBox');
+    if (bbfs7dBox) {
+      bbfs7dBox.innerHTML = '';
+      for (let i = 0; i < 7; i++) {
+        const circle = document.createElement('div');
+        circle.className = 'bbfs-digit';
+        circle.textContent = i;
+        circle.style.animationDelay = `${i * 0.1}s`;
+        bbfs7dBox.appendChild(circle);
+      }
     }
     
-    const resultDate = qs('#resultDate');
-    if (resultDate) {
-      resultDate.textContent = 'Test Mode';
-    }
+    // Update header
+    qs('#resultTitle').textContent = 'TEST MODE';
+    qs('#resultDate').textContent = new Date().toLocaleDateString('id-ID');
     
-    console.log('=== SIMPLE RESULTS SHOWN ===');
+    console.log('=== SIMPLE TEST COMPLETE ===');
+    
   } catch (error) {
-    console.error('CRITICAL ERROR:', error);
-    
-    // LAST RESORT: Redirect to intro page
+    console.error('ERROR in showResults:', error);
     showPage('page-intro');
-    alert('System error, please refresh page');
   }
 }
 
@@ -2749,6 +2760,7 @@ if (btnColokSet) btnColokSet.addEventListener('click', showAllSections);
 </script>
 </body>
 </html>
+
 
 
 
