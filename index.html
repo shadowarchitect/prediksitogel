@@ -2660,11 +2660,20 @@ if (btnColokSet) btnColokSet.addEventListener('click', showAllSections);
   ====================== */
   
   function addActionButtons() {
-    // Cek jika sudah ada action buttons
-    if (qs('.action-buttons')) return;
+  console.log('=== ADDING ACTION BUTTONS ===');
+  
+  try {
+    // Remove old buttons if exist
+    const oldButtons = qs('.action-buttons');
+    if (oldButtons && oldButtons.parentNode) {
+      oldButtons.parentNode.removeChild(oldButtons);
+    }
     
     const shareSection = qs('.share-section');
-    if (!shareSection) return;
+    if (!shareSection) {
+      console.warn('Share section not found');
+      return;
+    }
     
     // Create action buttons container
     const actionButtons = document.createElement('div');
@@ -2681,15 +2690,32 @@ if (btnColokSet) btnColokSet.addEventListener('click', showAllSections);
     // Insert after share section
     shareSection.parentNode.insertBefore(actionButtons, shareSection.nextSibling);
     
-    // Add event listeners
-    qs('#btnGenerateAgain').onclick = () => {
-      runProcessingDrama();
-    };
+    // Add event listeners - WAIT A BIT FOR DOM
+    setTimeout(() => {
+      const generateBtn = qs('#btnGenerateAgain');
+      const changeBtn = qs('#btnChangePasaran');
+      
+      if (generateBtn) {
+        generateBtn.onclick = () => {
+          console.log('Generate Again clicked');
+          runProcessingDrama();
+        };
+      }
+      
+      if (changeBtn) {
+        changeBtn.onclick = () => {
+          console.log('Change Pasaran clicked');
+          showPage('page-country');
+        };
+      }
+      
+      console.log('Action buttons added successfully');
+    }, 100);
     
-    qs('#btnChangePasaran').onclick = () => {
-      showPage('page-country');
-    };
+  } catch (error) {
+    console.error('Error in addActionButtons:', error);
   }
+}
 
   /* =====================
      INITIALIZE V3
@@ -2700,5 +2726,6 @@ if (btnColokSet) btnColokSet.addEventListener('click', showAllSections);
 </script>
 </body>
 </html>
+
 
 
