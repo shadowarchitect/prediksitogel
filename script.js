@@ -124,16 +124,33 @@ document.addEventListener('DOMContentLoaded', () => {
   // Panggil init setelah DOM loaded
   initLiveStats();
     
-  /* =====================
+ /* =====================
      PAGE NAV
   ====================== */
   const showPage = id => {
+    // 1. STOP ANY RUNNING PROCESSING
+    if (window.processingInterval) {
+      clearInterval(window.processingInterval);
+      window.processingInterval = null;
+    }
+    
+    // 2. CLEAR EDU SECTION
+    const eduSection = qs('#eduRotating');
+    if (eduSection && eduSection.parentNode) {
+      eduSection.parentNode.removeChild(eduSection);
+    }
+    
+    // 3. HIDE ALL PAGES
     qsa('.section').forEach(p => p.classList.add('hidden'));
+    
+    // 4. SHOW TARGET PAGE
     const el = qs('#' + id);
     if (el) {
       el.classList.remove('hidden');
       console.log('Showing page:', id);
     }
+    
+    // 5. SCROLL TO TOP
     window.scrollTo(0, 0);
   };
 
@@ -830,3 +847,4 @@ const createDigitBox = (digit, size = 'medium', type = '7d') => {
   console.log('Initializing Togel AI V3...');
   showPage('page-intro');
 });
+
