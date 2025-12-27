@@ -614,27 +614,29 @@ function startEduRotation() {
   console.log('=== SHOWING RESULTS PAGE ===');
   
   try {
-    // 1. Generate predictions
-    generateAllPredictions();
-    
-    // 2. Render results
-    renderResults();
-    
-    // 3. Show result page
+    // SIMPLE TEST: Skip everything, just show page
+    console.log('1. Attempting to show page...');
     showPage('page-result');
+    console.log('2. Page should be shown');
     
-    console.log('=== RESULTS PAGE SHOWN SUCCESSFULLY ===');
-  } catch (error) {
-    console.error('Error in showResults():', error);
-    
-    // EMERGENCY FALLBACK: Go to result page anyway
-    showPage('page-result');
-    
-    // Show error message to user
+    // Simple fallback content
     const resultTitle = qs('#resultTitle');
     if (resultTitle) {
-      resultTitle.textContent = 'Error - Coba Generate Lagi';
+      resultTitle.textContent = 'PREDIKSI TEST';
     }
+    
+    const resultDate = qs('#resultDate');
+    if (resultDate) {
+      resultDate.textContent = 'Test Mode';
+    }
+    
+    console.log('=== SIMPLE RESULTS SHOWN ===');
+  } catch (error) {
+    console.error('CRITICAL ERROR:', error);
+    
+    // LAST RESORT: Redirect to intro page
+    showPage('page-intro');
+    alert('System error, please refresh page');
   }
 }
 
@@ -916,6 +918,7 @@ const createDigitBox = (digit, size = 'medium', type = '7d') => {
   console.log('Initializing Togel AI V3...');
   showPage('page-intro');
 });
+
 
 
 
