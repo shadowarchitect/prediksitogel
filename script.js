@@ -611,11 +611,32 @@ function startEduRotation() {
      RENDER RESULTS PAGE
   ====================== */
   function showResults() {
-    console.log('Showing results page...');
+  console.log('=== SHOWING RESULTS PAGE ===');
+  
+  try {
+    // 1. Generate predictions
     generateAllPredictions();
+    
+    // 2. Render results
     renderResults();
+    
+    // 3. Show result page
     showPage('page-result');
+    
+    console.log('=== RESULTS PAGE SHOWN SUCCESSFULLY ===');
+  } catch (error) {
+    console.error('Error in showResults():', error);
+    
+    // EMERGENCY FALLBACK: Go to result page anyway
+    showPage('page-result');
+    
+    // Show error message to user
+    const resultTitle = qs('#resultTitle');
+    if (resultTitle) {
+      resultTitle.textContent = 'Error - Coba Generate Lagi';
+    }
   }
+}
 
   function renderResults() {
     console.log('Rendering results...');
@@ -832,11 +853,20 @@ const createDigitBox = (digit, size = 'medium', type = '7d') => {
   ====================== */
   
   function addActionButtons() {
-    // Cek jika sudah ada action buttons
-    if (qs('.action-buttons')) return;
+  console.log('=== ADDING ACTION BUTTONS ===');
+  
+  try {
+    // Remove old buttons if exist
+    const oldButtons = qs('.action-buttons');
+    if (oldButtons && oldButtons.parentNode) {
+      oldButtons.parentNode.removeChild(oldButtons);
+    }
     
     const shareSection = qs('.share-section');
-    if (!shareSection) return;
+    if (!shareSection) {
+      console.warn('Share section not found');
+      return;
+    }
     
     // Create action buttons container
     const actionButtons = document.createElement('div');
@@ -853,15 +883,32 @@ const createDigitBox = (digit, size = 'medium', type = '7d') => {
     // Insert after share section
     shareSection.parentNode.insertBefore(actionButtons, shareSection.nextSibling);
     
-    // Add event listeners
-    qs('#btnGenerateAgain').onclick = () => {
-      runProcessingDrama();
-    };
+    // Add event listeners - WAIT A BIT FOR DOM
+    setTimeout(() => {
+      const generateBtn = qs('#btnGenerateAgain');
+      const changeBtn = qs('#btnChangePasaran');
+      
+      if (generateBtn) {
+        generateBtn.onclick = () => {
+          console.log('Generate Again clicked');
+          runProcessingDrama();
+        };
+      }
+      
+      if (changeBtn) {
+        changeBtn.onclick = () => {
+          console.log('Change Pasaran clicked');
+          showPage('page-country');
+        };
+      }
+      
+      console.log('Action buttons added successfully');
+    }, 100);
     
-    qs('#btnChangePasaran').onclick = () => {
-      showPage('page-country');
-    };
+  } catch (error) {
+    console.error('Error in addActionButtons:', error);
   }
+}
 
   /* =====================
      INITIALIZE V3
@@ -869,5 +916,6 @@ const createDigitBox = (digit, size = 'medium', type = '7d') => {
   console.log('Initializing Togel AI V3...');
   showPage('page-intro');
 });
+
 
 
