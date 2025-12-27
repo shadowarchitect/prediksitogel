@@ -518,38 +518,51 @@ function startEduRotation() {
 }
 
   function runProcessingDrama() {
-  console.log('=== STARTING PROCESSING DRAMA ===');
+  console.log('=== START PROCESSING ===');
   
-  // CLEANUP FIRST
+  // 1. CLEANUP EVERYTHING
   cleanupAllIntervals();
-  
-  // 1. STOP ANY OLD INTERVAL FIRST
-  if (window.processingInterval) {
-    clearInterval(window.processingInterval);
-    window.processingInterval = null;
-  }
   
   // 2. SHOW PROCESSING PAGE
   showPage('page-processing');
   
-  // 3. RESET UI ELEMENTS
+  // 3. SIMPLE 3-STEP PROCESS
   const fill = qs('#progressFill');
   const text = qs('#progressText');
-  const log = qs('#processLog');
   
-  if (!fill || !text || !log) {
-    console.error('Processing elements not found');
-    setTimeout(showResults, 500);
+  if (!fill || !text) {
+    // Emergency: langsung ke results
+    setTimeout(showResults, 100);
     return;
   }
   
-  // Reset progress bar
+  // Reset
   fill.style.width = '0%';
-  text.textContent = 'Memulai analisis...';
-  log.innerHTML = '';
+  text.textContent = 'Memulai...';
   
-  // 4. START EDU ROTATION
-  const cleanupEdu = startEduRotation();
+  // Step 1
+  setTimeout(() => {
+    fill.style.width = '33%';
+    text.textContent = 'Analisis data...';
+  }, 500);
+  
+  // Step 2
+  setTimeout(() => {
+    fill.style.width = '66%';
+    text.textContent = 'Proses AI...';
+  }, 1500);
+  
+  // Step 3 - Finish
+  setTimeout(() => {
+    fill.style.width = '100%';
+    text.textContent = 'Selesai!';
+    
+    // Go to results
+    setTimeout(showResults, 500);
+  }, 2500);
+  
+  console.log('Processing started');
+}
   
   // 5. DRAMA SCRIPT
   const dramaScript = [
@@ -944,6 +957,7 @@ const createDigitBox = (digit, size = 'medium', type = '7d') => {
   console.log('Initializing Togel AI V3...');
   showPage('page-intro');
 });
+
 
 
 
