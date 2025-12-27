@@ -2426,11 +2426,34 @@ document.addEventListener('DOMContentLoaded', () => {
      RENDER RESULTS PAGE - V3
   ====================== */
   function showResults() {
-    console.log('Showing results page...');
-    generateAllPredictions();
-    renderResults();
+  console.log('=== SHOWING RESULTS PAGE ===');
+  
+  try {
+    // SIMPLE TEST: Skip everything, just show page
+    console.log('1. Attempting to show page...');
     showPage('page-result');
+    console.log('2. Page should be shown');
+    
+    // Simple fallback content
+    const resultTitle = qs('#resultTitle');
+    if (resultTitle) {
+      resultTitle.textContent = 'PREDIKSI TEST';
+    }
+    
+    const resultDate = qs('#resultDate');
+    if (resultDate) {
+      resultDate.textContent = 'Test Mode';
+    }
+    
+    console.log('=== SIMPLE RESULTS SHOWN ===');
+  } catch (error) {
+    console.error('CRITICAL ERROR:', error);
+    
+    // LAST RESORT: Redirect to intro page
+    showPage('page-intro');
+    alert('System error, please refresh page');
   }
+}
 
   function renderResults() {
     console.log('Rendering V3 results...');
@@ -2726,6 +2749,7 @@ if (btnColokSet) btnColokSet.addEventListener('click', showAllSections);
 </script>
 </body>
 </html>
+
 
 
 
